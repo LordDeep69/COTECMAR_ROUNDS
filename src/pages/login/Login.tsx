@@ -5,6 +5,7 @@ import { setUserLogged } from '../../redux/features/userLogged/userLoggedSlice'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
 import { obtenerUsuarios } from '../../../api' // Asegúrate de que la ruta sea correcta
+
 import './login.scss'
 
 interface Usuario {
@@ -15,6 +16,8 @@ interface Usuario {
   contrasena: string
   foto_perfil?: string // El campo foto_perfil puede ser opcional, ya que no se define como NOT NULL en la creación de la tabla
 }
+
+
 
 interface FormData {
   email: string

@@ -6,14 +6,12 @@ interface Sistema {
   imagen_sistema: string
   id_sistema: string
 }
-
 // Tipo de dato para la tabla Modelos
 interface Modelo {
   id?: number
   nombre: string
   imagen?: string // El campo imagen puede ser opcional, ya que se define como NOT NULL en la base de datos, pero no se proporciona en la creación de la tabla
 }
-
 // Tipo de dato para la tabla Equipos
 interface Equipo {
   id?: number
@@ -23,7 +21,6 @@ interface Equipo {
   id_equipo: string
   id_modelo: number
 }
-
 // Tipo de dato para la tabla Rondas
 interface Ronda {
   id: string
@@ -31,9 +28,8 @@ interface Ronda {
   fecha: string // Se asume que la fecha se maneja como una cadena de texto en formato ISO
   // Otros campos relevantes para las rondas pueden agregarse aquí
 }
-
 // Tipo de dato para la tabla Usuarios
-interface Usuario {
+export interface Usuario {
   id?: number
   nombre: string
   correo: string
