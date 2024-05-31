@@ -1,332 +1,478 @@
 .round {
-
     .roundsOperations {
-        display: flex;
-        width: auto;
-        height: max-content;
+      display: flex;
+      width: auto;
+      height: max-content;
+      background-color: rgba(0, 0, 0, 0.034);
+      border-radius: 10px;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+      justify-content: space-between;
+  
+      .figureSystemRound {
+        position: relative;
+        width: 30vw;
+        height: 160px;
+  
+        img {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          border-radius: 0px 0px 0px 10px;
+          object-fit: cover;
+          clip-path: polygon(0 0, 100% 0, 74.17% 100%, 0 100%);
+        }
+      }
+  
+      .actionsRounds {
+        width: 64vw;
+        height: 160px;
         background-color: rgba(0, 0, 0, 0.034);
-        border-radius: 10px;
-        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-        /* Offset-x, Offset-y, Blur-radius, Color */
-        justify-content: space-between;
-
-        .figureSystemRound {
-            position: relative;
-            width: 30vw;
-            height: 160px;
-
-            img {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                border-radius: 0px 0px 0px 10px;
-                object-fit: cover;
-                clip-path: polygon(0 0, 100% 0, 74.17% 100%, 0 100%); // Los cuatro vértices del trapecio
-            }
-        }
-
-        .actionsRounds {
-            width: 64vw;
-            height: 160px;
-            background-color: rgba(0, 0, 0, 0.034);
-            text-align: center;
-            padding-top: 1vw;
-            padding-top: max(10px);
-            display: flex;
-            flex-direction: column;
-            gap: 3vw;
-            gap: max(45px);
-            overflow-x: hidden; // Agrega esta línea para ocultar el desbordamiento horizontal
-
-            .titleActionsRound {
-                color: black;
-
-
-            }
-
-
-
-            .containerActions {
-                display: flex;
-                padding-left: 2vw;
-                padding-right: 2vw;
-                justify-content: center;
-                align-items: center;
-                align-content: center;
-                gap: 10vw;
-
-                .actionsButtons {
-                    width: 50%;
-                    height: 4vw;
-                    max-height: 75px;
-                    border-radius: 0.65vw;
-                    background-color: rgba(161, 169, 209, 0.452);
-                    align-self: center;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    gap: 3vw;
-
-                    .historyFigure {
-                        height: 27px;
-
-                        .historyImg {
-                            width: 23px;
-                            height: 29px;
-                        }
-
-                    }
-
-
-                    p {
-                        font-size: 1vw;
-                    }
-                }
-
-            }
-
-
-        }
-    }
-
-    .formatRound {
-
-        padding-top: 10px;
-        gap: 5px;
+        text-align: center;
+        padding-top: 1vw;
+        padding-top: max(10px);
         display: flex;
-        justify-content: space-between;
-        height: calc(100vh - 160px);
-
-
-
-
-        .elementsSystem {
-            width: 31vw;
-            height: calc(100vh - 170px);
-            align-items: center;
-            padding-bottom: 5px;
-            gap: 0.8vw;
-            overflow-y: auto;
-
-            /* Agrega esta línea para habilitar la barra de desplazamiento vertical */
-            // Estilos para la barra de scroll
-            &::-webkit-scrollbar {
-
-                width: 8px;
-            }
-
-            &::-webkit-scrollbar-thumb {
-                background-color: rgb(193, 200, 212);
-                border-radius: 50px;
-
-                &:hover {
-                    background-color: rgb(110, 117, 129);
-
-                }
-            }
-
-            // Estilos para el pulgar de la barra de scroll
-
+        flex-direction: column;
+        gap: 3vw;
+        gap: max(45px);
+        overflow-x: hidden;
+  
+        .titleActionsRound {
+          color: black;
+          font-size: 2vw; // Tamaño de fuente más grande
         }
-
-        .format {
-            width: 72vw;
-            height: auto;
-            background-color: rgba(0, 0, 0, 0.034);
+  
+        .containerActions {
+          display: flex;
+          padding-left: 2vw;
+          padding-right: 2vw;
+          justify-content: center;
+          align-items: center;
+          align-content: center;
+          gap: 10vw;
+  
+          .actionsButtons {
+            width: 50%;
+            height: 4vw;
+            max-height: 75px;
+            border-radius: 0.65vw;
+            background-color: rgba(161, 169, 209, 0.452);
+            align-self: center;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            overflow-y: auto;
-            /* Agrega esta línea para habilitar la barra de desplazamiento vertical */
-
-
-            .titleElement {
-                align-self: center;
-                text-align: center;
-                color: rgba(13, 13, 22, 0.473);
-                font-size: 3vw;
-                margin-top: 1vw;
-                margin-bottom: 1vw;
-
+            gap: 3vw;
+  
+            .historyFigure {
+              height: 27px;
+  
+              .historyImg {
+                width: 23px;
+                height: 29px;
+              }
             }
-
-            .formatRoundlement {
-                width: 90%;
-                height: max-content;
-                
-                background-color: rgb(255, 255, 255);
-                border-radius: 1vw;
-                padding: 2vw;
-
+  
+            p {
+              font-size: 1.5vw; // Tamaño de fuente más grande
+            }
+          }
+        }
+      }
+    }
+  
+    .formatRound {
+      padding-top: 10px;
+      gap: 5px;
+      display: flex;
+      justify-content: space-between;
+      height: calc(100vh - 160px);
+  
+      .elementsSystem {
+        width: 31vw;
+        height: calc(100vh - 170px);
+        align-items: center;
+        padding-bottom: 5px;
+        gap: 0.8vw;
+        overflow-y: auto;
+  
+        &::-webkit-scrollbar {
+          width: 8px;
+        }
+  
+        &::-webkit-scrollbar-thumb {
+          background-color: rgb(193, 200, 212);
+          border-radius: 50px;
+  
+          &:hover {
+            background-color: rgb(110, 117, 129);
+          }
+        }
+      }
+  
+      .format {
+        width: 72vw;
+        height: auto;
+        background-color: rgba(0, 0, 0, 0.034);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-y: auto;
+  
+        .titleElement {
+          align-self: center;
+          text-align: center;
+          color: rgba(13, 13, 22, 0.473);
+          font-size: 4vw; // Tamaño de fuente más grande
+          margin-top: 1vw;
+          margin-bottom: 1vw;
+        }
+  
+        .formatRoundlement {
+          width: 90%;
+          height: max-content;
+          background-color: rgb(255, 255, 255);
+          border-radius: 1vw;
+          padding: 2vw;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          text-align: center;
+          padding-bottom: 5vw;
+  
+          .buttonRegisterElement {
+            width: 12vw;
+            padding: 1vw;
+            border-radius: 0.4vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            align-self: center;
+            align-content: center;
+            text-align: center;
+            margin-top: 2vw;
+            font-size: 2.5vw; // Tamaño de fuente más grande
+            background-color: rgb(53, 131, 219);
+            color: white;
+          }
+  
+          .titleRegister {
+            font-size: 2vw; // Tamaño de fuente más grande
+            font-weight: bold;
+            padding: 1vw;
+          }
+  
+          .formElementSelected {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2vw;
+            width: 100%;
+  
+            .containerInputs {
+              width: max-content;
+              height: max-content;
+              padding: 1.5vw;
+              background-color: rgba(185, 208, 212, 0.63);
+              border-radius: 0.5vw;
+              align-self: center;
+              box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
+              .titleInput {
+                margin-bottom: 0.5vw;
+                font-size: 1.8vw; // Tamaño de fuente más grande
+                font-weight: bold;
+              }
+  
+              .divider {
+                height: 2px;
+                background-color: black;
+                margin-bottom: 1vw;
+              }
+  
+              .inputsAll {
                 display: flex;
                 flex-direction: column;
-                justify-content: center;
-                text-align: center;
-                padding-bottom: 5vw;
-
-                .buttonRegisterElement
-                {
-                    width: 10vw;
-                    padding: 1vw;
-                    border-radius: 0.4vw;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    align-self: center;
-                    align-content: center;
-                    text-align: center;
-                    margin-top: 2vw;
-                    font-size: 2vw;
-                    background-color: rgb(53, 131, 219);
-                }
-
-                .titleRegister
-                {
-                    font-size: 1.3vw;
-                    font-weight: bold;
-                    padding: 1vw;
-                }
-
-                .formElementSelected {
-                    display: flex;
-                    flex-wrap: wrap;  // Permite que los elementos se envuelvan a la siguiente línea
-
-                    justify-content: center;
-                    gap: 2vw;
-                    width: 100%;
-
-
-                    .containerInputs {
-
-                        width: max-content;
-                        height: max-content;
-                        padding-top: 0.7vw;
-                        padding-bottom: 0.7vw;
-                        background-color: rgba(185, 208, 212, 0.63);
-                        border-radius: 0.2vw;
-                        align-self: center;
-
-                        .titleInput
-                        {
-                            margin-left: 0.5vw;
-                        
-                        }
-
-                        .divider {
-                            height: 1px;
-                            background-color: black;
-                            /* Color de la línea */
-                            margin-bottom: 10px;
-                            /* Espacio entre la línea y el título */
-                        }
-
-                        .inputsAll
-                        {
-                            margin-left: 0.5vw;
-                            display: flex;
-                            flex-direction: column;
-                            gap: 5px;
-
-                            .oneInput
-                            {
-                                display: flex;
-                                justify-content: space-between;
-                                margin-right: 10px;
-
-                                input
-                                {
-                                    width: 100px;
-                                    text-align: center;
-                                }
-
-                                select
-                                {
-                                    width: 100px;
-                                    text-align: center;
-
-                                }
-                            }
-                        }
-
-                    }
-                }
-            }
-        }
-
-    }
-
-}
-
-
-
-
-
-.containerInputs {
-
-  padding: 1rem;
-  background-color: rgba(185, 208, 212, 0.63);
-  border-radius: 0.2rem;
-  align-self: center;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.titleInput {
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-
-
-.oneInput {
-    display: flex;
-    gap: 50px;
-
-}
-
-label {
-  font-size: 1rem;
-  margin-bottom: 0.2rem;
-  text-align: justify;
-}
-
-.required {
-  color: red;
-}
-
-input {
-
-  border: 1px solid #ccc;
-  border-radius: 0.2rem;
+                gap: 1vw;
   
-  text-align: center;
-}
+                .oneInput {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 0.5vw;
+  
+                  label {
+                    font-size: 1.5vw; // Tamaño de fuente más grande
+                    font-weight: normal;
+                  }
+  
+                  input,
+                  select {
+                    width: 100%;
+                    padding: 0.7vw;
+                    border-radius: 0.3vw;
+                    border: 1px solid #ccc;
+                    text-align: center;
+                    font-size: 1.5vw; // Tamaño de fuente más grande
+                  }
+  
+                  input:focus,
+                  select:focus {
+                    outline: none;
+                    border-color: #00a8ff;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
 
-input:focus {
-  outline: none;
-  border-color: #00a8ff;
-}
 
-// .submit {
-//   width: 100px;
-//   height: 40px;
-//   margin-top: 1rem;
-//   margin-left: auto;
-//   margin-right: auto;
-//   border: none;
-//   border-radius: 0.2rem;
-//   background-color: #00a8ff;
-//   color: white;
-//   font-size: 1rem;
-//   font-weight: bold;
-//   cursor: pointer;
-// }
-
-// .submit:hover {
-//   background-color: #0097e6;
-// }
-
-// .submit:active {
-//   transform: scale(0.95);
-// }
+  .round {
+    .roundsOperations {
+      display: flex;
+      width: auto;
+      height: max-content;
+      background-color: rgba(0, 0, 0, 0.034);
+      border-radius: 10px;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+      justify-content: space-between;
+  
+      .figureSystemRound {
+        position: relative;
+        width: 30vw;
+        height: 160px;
+  
+        img {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          border-radius: 0px 0px 0px 10px;
+          object-fit: cover;
+          clip-path: polygon(0 0, 100% 0, 74.17% 100%, 0 100%);
+        }
+      }
+  
+      .actionsRounds {
+        width: 64vw;
+        height: 160px;
+        background-color: rgba(0, 0, 0, 0.034);
+        text-align: center;
+        padding-top: 1vw;
+        padding-top: max(10px);
+        display: flex;
+        flex-direction: column;
+        gap: 3vw;
+        gap: max(45px);
+        overflow-x: hidden;
+  
+        .titleActionsRound {
+          color: black;
+          font-size: 2vw;
+        }
+  
+        .containerActions {
+          display: flex;
+          padding-left: 2vw;
+          padding-right: 2vw;
+          justify-content: center;
+          align-items: center;
+          align-content: center;
+          gap: 10vw;
+  
+          .timer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 2vw; // Tamaño de fuente más grande
+            color: #333;
+            background-color: #f0f0f0;
+            padding: 1vw;
+            border-radius: 1vw;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
+            .timerValue {
+              font-size: 3vw; // Tamaño de fuente más grande
+              font-weight: bold;
+              color: #ff0000; // Color rojo para resaltar el tiempo
+            }
+          }
+  
+          .actionsButtons {
+            width: 50%;
+            height: 4vw;
+            max-height: 75px;
+            border-radius: 0.65vw;
+            background-color: rgba(161, 169, 209, 0.452);
+            align-self: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3vw;
+  
+            .historyFigure {
+              height: 27px;
+  
+              .historyImg {
+                width: 23px;
+                height: 29px;
+              }
+            }
+  
+            p {
+              font-size: 1.5vw;
+            }
+          }
+        }
+      }
+    }
+  
+    .formatRound {
+      padding-top: 10px;
+      gap: 5px;
+      display: flex;
+      justify-content: space-between;
+      height: calc(100vh - 160px);
+  
+      .elementsSystem {
+        width: 31vw;
+        height: calc(100vh - 170px);
+        align-items: center;
+        padding-bottom: 5px;
+        gap: 0.8vw;
+        overflow-y: auto;
+  
+        &::-webkit-scrollbar {
+          width: 8px;
+        }
+  
+        &::-webkit-scrollbar-thumb {
+          background-color: rgb(193, 200, 212);
+          border-radius: 50px;
+  
+          &:hover {
+            background-color: rgb(110, 117, 129);
+          }
+        }
+      }
+  
+      .format {
+        width: 72vw;
+        height: auto;
+        background-color: rgba(0, 0, 0, 0.034);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-y: auto;
+  
+        .titleElement {
+          align-self: center;
+          text-align: center;
+          color: rgba(13, 13, 22, 0.473);
+          font-size: 4vw;
+          margin-top: 1vw;
+          margin-bottom: 1vw;
+        }
+  
+        .formatRoundlement {
+          width: 90%;
+          height: max-content;
+          background-color: rgb(255, 255, 255);
+          border-radius: 1vw;
+          padding: 2vw;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          text-align: center;
+          padding-bottom: 5vw;
+  
+          .buttonRegisterElement {
+            width: 12vw;
+            padding: 1vw;
+            border-radius: 0.4vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            align-self: center;
+            align-content: center;
+            text-align: center;
+            margin-top: 2vw;
+            font-size: 2.5vw;
+            background-color: rgb(53, 131, 219);
+            color: white;
+          }
+  
+          .titleRegister {
+            font-size: 2vw;
+            font-weight: bold;
+            padding: 1vw;
+          }
+  
+          .formElementSelected {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2vw;
+            width: 100%;
+  
+            .containerInputs {
+              width: max-content;
+              height: max-content;
+              padding: 1.5vw;
+              background-color: rgba(185, 208, 212, 0.63);
+              border-radius: 0.5vw;
+              align-self: center;
+              box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
+              .titleInput {
+                margin-bottom: 0.5vw;
+                font-size: 1.8vw;
+                font-weight: bold;
+              }
+  
+              .divider {
+                height: 2px;
+                background-color: black;
+                margin-bottom: 1vw;
+              }
+  
+              .inputsAll {
+                display: flex;
+                flex-direction: column;
+                gap: 1vw;
+  
+                .oneInput {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 0.5vw;
+  
+                  label {
+                    font-size: 1.5vw;
+                    font-weight: normal;
+                  }
+  
+                  input,
+                  select {
+                    width: 100%;
+                    padding: 0.7vw;
+                    border-radius: 0.3vw;
+                    border: 1px solid #ccc;
+                    text-align: center;
+                    font-size: 1.5vw;
+                  }
+  
+                  input:focus,
+                  select:focus {
+                    outline: none;
+                    border-color: #00a8ff;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
