@@ -1,186 +1,55 @@
-.home
-{
-    display: flex;
-    justify-content: space-between;
-    &__left
-    {
-        width: 22%;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.034);
-        position: fixed;
-        figure
-        {
-            display: flex;
-            flex-direction: column;
-            height: 30%;
-            background-color: rgba(0, 0, 0, 0.034);
-            position: relative;
-            justify-content: center;
-            align-items: center;
-            img
-            {
-                width: 70%;
-            }
+.home-container {
+  display: flex;
+  height: 100vh;
+}
 
-            h2
-            {
-                position: absolute;
-                left: 41%;
-                top: 85%;
-                font-size: 1.4vw;
-            }
-        }
+.left-section {
+  width: 23%;
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-right: 2px solid #ccc;
+}
 
-        .menu
-        {
-            height: 70%;
-            background-color: rgba(0, 0, 0, 0.034);
-            display: flex;
-            flex-direction: column;
-            
-            .titleMenu
-            {
-                font-weight: bold;
-                color: rgb(43, 119, 189);
-                margin-left: 10%;
-                padding-top: 5vw;
-                font-size: 1.2vw;
-                padding-bottom: 3vw;
-            }
+.right-section {
+  width: 75%;
+  padding: 20px;
+}
 
-            .option
-            {
-                font-weight: bold;
-                color: rgb(43, 119, 189);
-                margin-left: 10%;
-                width: 90%;
-                height: 6%;
-                text-align: center;
-                display: flex;
-                align-items: center;
-                padding-left: 5%;
-                font-size: 1.2vw;
-                cursor: pointer;
+.navbar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 
-                &:hover
-                {
-                    background-color: rgba(230, 229, 229, 0.767);
-                }
-                margin-bottom: 20%;
-            }
-        }
+.logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
 
-    }
+.logo img {
+  height: 50px;
+  margin-right: 10px;
+}
 
-    &__right
-    {
-        margin-left: 22.5%;
-        width: 77.5%;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.226);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+.nav-links {
+  list-style: none;
+  padding: 0;
+}
 
-        .searchEngine
-        {
-            height: 13vh;
-            background-color: rgba(252, 252, 252, 0.801);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+.nav-links li {
+  margin-bottom: 10px;
+  cursor: pointer;
+  padding: 10px;
+  transition: background-color 0.3s;
+}
 
-            .titleSelected
-            {
-                font-size: 2vw;
-                padding-left: 3vw;
+.nav-links li:hover {
+  background-color: #ddd;
+}
 
-            }
-
-            .mySearch
-            {
-                display: flex;
-                align-items: center;
-                
-
-                .figureFilter
-                {
-                    width: 35px;
-                    height: 35px;
-                    background-color: rgba(146, 190, 190, 0.151);
-                    margin-top: 10px;
-                    display: flex;
-                    align-items: center;
-                    align-content: center;
-                    justify-content: center;
-                    border-radius: 2px;
-                    img
-                    {
-                        width: 30px;
-                        height: 30px;
-                        
-                    }
-                }
-            }
-        }
-
-        .container
-        {
-            height: 86.2vh;
-            background-color: rgb(255, 255, 255);
-
-            .actionsBoard
-            {
-                background-color: rgba(235, 223, 223, 0.411);
-                height: 20%;
-                display: flex;
-                justify-content: space-between;
-                align-content: center;
-                align-content: center;
-                
-
-                .addSystem
-                {
-                    margin-left: 3vw;
-                    align-self: center;
-                    p{
-
-                        background-color: rgba(95, 130, 226, 0.836);
-                        padding-left: 1vw;
-                        padding-right: 1vw;
-                        padding-top: 0.75vw;
-                        padding-bottom: 0.75vw;
-                        border-radius: 0.5vw;
-                    }
-                }
-
-                .classystem
-                {
-                    margin-right: 6vw;
-                    align-self: center;
-                    p{
-
-                        background-color: rgba(95, 130, 226, 0.836);
-                        padding-left: 1vw;
-                        padding-right: 1vw;
-                        padding-top: 0.75vw;
-                        padding-bottom: 0.75vw;
-                        border-radius: 0.5vw;
-                    }
-                }
-            }
-
-            .board {
-                background-color: rgba(116, 108, 108, 0.13);
-                min-height: 80%;
-                height: max-content;
-                padding: 0.5vw 3vw 0.5vw 3vw;
-                display: flex;
-                flex-wrap: wrap;  // Permite que los elementos se envuelvan a la siguiente línea
-                gap: 2vw;         // Añade espacio entre los elementos
-                justify-content: space-between;
-              }
-        }
-
-    }
+.nav-links a {
+  text-decoration: none;
+  color: #000;
+  font-size: 18px;
 }

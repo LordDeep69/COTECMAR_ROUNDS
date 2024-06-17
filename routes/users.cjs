@@ -438,10 +438,45 @@ router.delete('/motor_09/:id', (req, res) => {
 
 
 
-// Controlador para eliminar un motor existente de la tabla Motor_
+// Obtener los detalles específicos de un equipo basado en su ID
+router.get('/equipos/:id', (req, res) => {
+    const equipoId = req.params.id;
+    const query = `SELECT * FROM ${equipoId}`;
+
+    db.query(query, (error, results) => {
+        if (error) {
+            console.error('Error al obtener los detalles del equipo:', error);
+            res.status(500).json({ error: 'Error al obtener los detalles del equipo' });
+        } else {
+            res.status(200).json(results);
+        }
+    });
+});// Controlador para eliminar un motor existente de la tabla Motor_
+
+// Obtener la estructura de la tabla específica de un equipo por su ID
+router.get('/equipo-detalles/:id', (req, res) => {
+    const equipoId = req.params.id;
+    const query = `SHOW COLUMNS FROM ${equipoId}`;
+
+    db.query(query, (error, results) => {
+        if (error) {
+            console.error(`Error al obtener la estructura de la tabla del equipo ${equipoId}:`, error);
+            res.status(500).json({ error: `Error al obtener la estructura de la tabla del equipo ${equipoId}` });
+        } else {
+            res.status(200).json(results);
+        }
+    });
+});
+
+module.exports = router;
 
 
 
 
 module.exports = router;
+
+
+
+
+
 

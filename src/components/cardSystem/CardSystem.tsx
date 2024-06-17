@@ -1,37 +1,28 @@
 import React from 'react'
-import './cardSystem.scss'
 import { useNavigate } from 'react-router-dom'
+import './cardSystem.scss'
 
-interface Props {
+interface CardSystemProps {
   imgSystemGlobal: string
   nameSystemGlobal: string
+  idSistem: string
 }
 
-const CardSystem: React.FC<Props> = ({ imgSystemGlobal, nameSystemGlobal }) => {
+const CardSystem: React.FC<CardSystemProps> = ({ imgSystemGlobal, nameSystemGlobal, idSistem }) => {
   const navigate = useNavigate()
+
   const handleGo = (): void => {
-    navigate('/round')
+    navigate('/round', { state: { id: idSistem } })
   }
+
   return (
-    <article className='systemCard' onClick={() => { handleGo() }}>
-        <figure className='systemCard__picture'>
-            <img src={imgSystemGlobal} alt="Imagen del Sistema" />
-        </figure>
-
-        <div className='systemCard__info'>
-            <span className='nameSystem'>{nameSystemGlobal}</span>
-            <div className='dataSystem'>
-                <span className='dataOne'>
-                    <p> <span>Tipo:</span> Guerra</p>
-                    <p><span>Equipos:</span> 208</p>
-                </span>
-
-                <span className='dataTwo'>
-                    <p><span>Rondas:</span> Realizadas</p>
-                    <p><span>Ubicación:</span> Cartagena</p>
-                </span>
-            </div>
-        </div>
+    <article className='systemCard' onClick={handleGo}>
+      <figure className='systemCard__picture'>
+        <img src={imgSystemGlobal} alt="Imagen del Sistema" />
+      </figure>
+      <span className='systemCard__info'>
+        <span className='nameSystem'>{nameSystemGlobal}</span>
+      </span>
     </article>
   )
 }

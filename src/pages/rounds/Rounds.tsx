@@ -1,113 +1,92 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { type RootState } from '../../redux/store'
+import { obtenerEquipos, type Equipo } from '../../../api'
+import { CountdownCircleTimer } from 'react-countdown-circle-timer'
+import EquipmentsList from '../../components/equipments_list/EquipmentsList'
+import RegisterForm from '../../components/registerFormat/RegisterFormat' // Importamos el nuevo componente de formulario
 import './rounds.scss'
-import ElementRound from '../../components/elementRound/ElementRound'
-import { useAppSelector } from '../../hooks/reduxHooks'
-import GeneradorFormat from '../../components/ElementsFormats/GeneradorFormat/GeneradorFormat'
-import MotorFormat from '../../components/ElementsFormats/MotorFormat/MotorFormat'
 
-interface FormData {
-  name: string
-  password: string
-  email: string
-  age: number
-  gender: string
-  rating: number
-  temperatureOil: number
-  pressure: number
-  statuPressureOilLow: string
-  statuPressureOilHight: string
-  generatorRpm: number
-  generatorOperation: string
-  generatorAutomatic: string
-  generatorManual: string
-  generatorRemoteBlock: string
-  generatorCB: string
-  generatorFailure: string
-}
-
-const Rounds: React.FC = () => {
-  const [secondsLeft, setSecondsLeft] = useState(600)
-  const count = useAppSelector((state) => state.idElemetSelecte.id)
+const Round: React.FC = () => {
+  const [equipos, setEquipos] = useState<Equipo[]>([])
+  const [registedBy, setRegistedBy] = useState('')
+  const [timerKey, setTimerKey] = useState(0)
+  const [viewingEquipment, setViewingEquipment] = useState<Equipo | null>(null) // Nuevo estado para controlar la vista
+  const selectedSystem = useSelector((state: RootState) => state.selectedSystem.system)
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setSecondsLeft((prevSecondsLeft) => {
-        if (prevSecondsLeft <= 1) {
-          clearInterval(interval)
-          return 0
-        }
-        return prevSecondsLeft - 1
-      })
-    }, 1000)
+    const fetchEquipos = async (): Promise<void> => {
+      if (selectedSystem?.id !== null) {
+        const allEquipos = await obtenerEquipos()
+        const systemEquipos = allEquipos.filter(equipo => equipo.id_sistema === selectedSystem.id)
+        setEquipos(systemEquipos)
+      }
+    }
 
-    return () => { clearInterval(interval) }
-  }, [])
+    fetchEquipos()
+  }, [selectedSystem])
 
-  const formatTime = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60)
-    const secs = seconds % 60
-    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`
+  const handleRegister = (equipment: Equipo): void => {
+    setViewingEquipment(equipment)
   }
 
-  console.log(`El Id Seleccionado es: ${count}`)
+  const handleBackToList = (): void => {
+    setViewingEquipment(null)
+  }
+
+  const handleTimerComplete = (): void => {
+    // Lógica para manejar lo que sucede cuando el temporizador se completa
+    // Por ejemplo, desencadenar el envío de formularios
+  }
+
+  const calculateInitialTime = (): number => {
+    const now = new Date()
+    const minutes = now.getMinutes()
+    const seconds = now.getSeconds()
+    return 900 - (minutes % 15) * 60 - seconds // 15 minutos en segundos
+  }
 
   return (
-    <main className='round'>
-      <section className='roundsOperations'>
-        <figure className='figureSystemRound'>
-          <img src="https://images.ecestaticos.com/uR18VRzf557uZn7XFdhtTPDyYSE=/0x178:1898x1245/1600x900/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2F453%2Fc2d%2Fd82%2F453c2dd823162e82b5b779f5fa390e63.jpg" alt="a" />
-        </figure>
-
-        <div className='actionsRounds'>
-
-          <span className='titleActionsRound'>Buque B</span>
-          <div className='containerActions'>
-
-            <div className='timer'>
-              <span>Tiempo Restante:</span>
-              <span className='timerValue'>{formatTime(secondsLeft)}</span>
+    <div className="round-container">
+      <header className="round-header">
+        <h1>{selectedSystem?.nombre_sistema}</h1>
+        <input
+          type="text"
+          placeholder="Registed By"
+          value={registedBy}
+          onChange={(e) => { setRegistedBy(e.target.value) }}
+        />
+        <CountdownCircleTimer
+          key={timerKey}
+          isPlaying
+          duration={calculateInitialTime()} // Duración dinámica
+          colors="#A30000"
+          onComplete={handleTimerComplete}
+        >
+          {({ remainingTime }) => (
+            <div className="timer">
+              <span>{Math.floor(remainingTime / 60)}:{remainingTime % 60}</span>
             </div>
-            <section className='actionsButtons'>
-
-              <span className='newRound'>
-                <figure>
-                  <img src="https://i.ibb.co/rvkKtK1/image-5.png" alt="New Round" />
-                </figure>
-                <p>Nueva Ronda</p>
-              </span>
-              <span className='history'>
-                <figure className='historyFigure'>
-                  <img className='historyImg' src="https://i.ibb.co/xL4RpZw/image-6.png" alt="history" />
-                </figure>
-                <p>Historial</p>
-              </span>
-            </section>
-          </div>
-        </div>
-      </section>
-
-      <section className='formatRound'>
-        <section className='elementsSystem'>
-          <ElementRound state='check' imgSystemGlobal='https://galaico.com.co/wp-content/uploads/2020/04/AP-170FB.png' nameSystemGlobal='Motor' />
-          <ElementRound state='check' imgSystemGlobal='https://http2.mlstatic.com/D_NQ_NP_780236-MCO52390227857_112022-O.webp' nameSystemGlobal='Aiere' />
-          <ElementRound state='pending' imgSystemGlobal='https://static.vecteezy.com/system/resources/previews/028/078/384/original/industrial-electric-generator-engine-isometric-free-png.png' nameSystemGlobal='Generador' />
-          <ElementRound state='check' imgSystemGlobal='https://www.roxell.com/sites/default/files/styles/full_width_preserve_ratio_desktop/public/2022-03/heating-direct-fired-cannon-heater-gas-oil-render-siroc-turbo.png?itok=2sO52FnU' nameSystemGlobal='Calentador' />
-          <ElementRound state='offline' imgSystemGlobal='https://www.quincycompressor.com/wp-content/uploads/2020/12/qv-10-aug-2016-1.png' nameSystemGlobal='Bomba' />
-          <ElementRound state='check' imgSystemGlobal='https://i1.wp.com/www.macrolaser.com.co/wp-content/uploads/2016/02/MR4040.png?fit=910%2C1036' nameSystemGlobal='CNC' />
-          <ElementRound state='check' imgSystemGlobal='https://http2.mlstatic.com/D_NQ_NP_780236-MCO52390227857_112022-O.webp' nameSystemGlobal='Aiere' />
-          <ElementRound state='pending' imgSystemGlobal='https://static.vecteezy.com/system/resources/previews/028/078/384/original/industrial-electric-generator-engine-isometric-free-png.png' nameSystemGlobal='Generador' />
-          <ElementRound state='check' imgSystemGlobal='https://www.roxell.com/sites/default/files/styles/full_width_preserve_ratio_desktop/public/2022-03/heating-direct-fired-cannon-heater-gas-oil-render-siroc-turbo.png?itok=2sO52FnU' nameSystemGlobal='Calentador' />
-          <ElementRound state='offline' imgSystemGlobal='https://www.quincycompressor.com/wp-content/uploads/2020/12/qv-10-aug-2016-1.png' nameSystemGlobal='Bomba' />
-        </section>
-        {count === 'Generador' && <GeneradorFormat />}
-        {count === 'Aiere' && <h2>FORMATO DE AIRE</h2>}
-        {count === 'Motor' && <MotorFormat />}
-        {count === 'Calentador' && <h2>FORMATO DE Calentador</h2>}
-        {count === 'Bomba' && <h2>FORMATO DE Bomba</h2>}
-        {count === 'CNC' && <h2>FORMATO DE CNC</h2>}
-      </section>
-    </main>
+          )}
+        </CountdownCircleTimer>
+      </header>
+      <main className="round-main">
+        {viewingEquipment
+          ? (
+          <RegisterForm equipment={viewingEquipment} handleBack={handleBackToList} />
+            )
+          : (
+          <EquipmentsList
+            selectedSystemId={selectedSystem?.id ?? 0}
+            handleRegister={handleRegister}
+          />
+            )}
+      </main>
+      <footer className="round-footer">
+        <button onClick={() => { handleRegister(0) }}>Enviar Todos los Registros</button>
+      </footer>
+    </div>
   )
 }
 
-export default Rounds
+export default Round

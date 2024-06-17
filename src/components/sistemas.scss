@@ -1,0 +1,39 @@
+.sistemas-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .sistemas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .sistemas-header input {
+    width: 70%;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .add-system-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .add-system-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .sistemas-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  

@@ -1,6 +1,18 @@
+import { type UserRole } from './src/redux/features/userLogged/userLoggedSlice' // Asegúrate de que la ruta sea correcta
+
+interface Usuario {
+  id?: number
+  nombre: string
+  correo: string
+  tipo_usuario: UserRole // Cambiado a UserRole
+  contrasena: string
+  foto_perfil?: string
+}
+
 // Tipo de dato para la tabla Sistemas
-interface Sistema {
-  id?: number // El signo de interrogación indica que el campo es opcional, útil para el campo autoincremental
+
+export interface Sistema {
+  id?: number
   id_usuario: number
   nombre_sistema: string
   imagen_sistema: string
@@ -8,14 +20,14 @@ interface Sistema {
 }
 
 // Tipo de dato para la tabla Modelos
-interface Modelo {
+export interface Modelo {
   id?: number
   nombre: string
   imagen?: string // El campo imagen puede ser opcional, ya que se define como NOT NULL en la base de datos, pero no se proporciona en la creación de la tabla
 }
 
 // Tipo de dato para la tabla Equipos
-interface Equipo {
+export interface Equipo {
   id?: number
   id_sistema: number
   nombre_equipo: string
@@ -25,7 +37,7 @@ interface Equipo {
 }
 
 // Tipo de dato para la tabla Rondas
-interface Ronda {
+export interface Ronda {
   id: string
   id_sistema: number
   fecha: string // Se asume que la fecha se maneja como una cadena de texto en formato ISO
@@ -33,14 +45,6 @@ interface Ronda {
 }
 
 // Tipo de dato para la tabla Usuarios
-interface Usuario {
-  id?: number
-  nombre: string
-  correo: string
-  tipo_usuario: string // Enumera los posibles valores para tipo_usuario
-  contrasena: string
-  foto_perfil?: string // El campo foto_perfil puede ser opcional, ya que no se define como NOT NULL en la creación de la tabla
-}
 
 // Función para obtener todos los usuarios
 export const obtenerUsuarios = async (): Promise<Usuario[]> => {
@@ -521,3 +525,37 @@ export const eliminarRegistroMotor09 = async (id: number): Promise<void> => {
     throw new Error('Error al eliminar el registro en Motor_09')
   }
 }
+
+// Función para obtener los detalles de un sistema específico
+// En api.ts
+
+export const fetchSystemDetails = async (id: number): Promise<Sistema> => {
+  try {
+    const response = await fetch(`http://localhost:3002/api/sistemas/${id}`)
+    const data = await response.json()
+    return data
+  } catch (error) {
+    console.error('Error al obtener detalles del sistema:', error)
+    throw new Error('Error al obtener detalles del sistema')
+  }
+}
+
+// api.ts
+
+// Función para obtener los detalles específicos de un equipo basado en su ID
+export const obtenerDetallesEquipo = async (idEquipo: string): Promise<any> => {
+  try {
+    const response = await fetch(`http://localhost:3002/api/equipos/${idEquipo}`)
+    if (!response.ok) {
+      throw new Error('Error al obtener los detalles del equipo')
+    }
+    const data = await response.json()
+    return data
+  } catch (error) {
+    console.error('Error al obtener los detalles del equipo:', error)
+    throw new Error('Error al obtener los detalles del equipo')
+  }
+}
+
+// Otras funciones de la API
+// ...

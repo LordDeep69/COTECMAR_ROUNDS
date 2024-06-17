@@ -2,14 +2,16 @@ import { configureStore } from '@reduxjs/toolkit'
 import counterSlice from './features/counter/counterSlice'
 import userLoggedSlice from './features/userLogged/userLoggedSlice'
 import { idElementSelectedReducer } from './features/stateElementSelected/stateElementSelected.ts'
-// ...
+import selectedSystemReducer from './features/selectedSystemSlice'
+import selectedRoundReducer from './features/selectedRoundSlice.ts'
 
 export const store = configureStore({
   reducer: {
-
     counter: counterSlice,
     userLogged: userLoggedSlice,
-    idElemetSelecte: idElementSelectedReducer // Aquí usa el reductor en lugar del slice
+    idElementSelected: idElementSelectedReducer,
+    selectedSystem: selectedSystemReducer,
+    selectedRound: selectedRoundReducer
 
   }
 })
