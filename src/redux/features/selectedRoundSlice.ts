@@ -1,4 +1,3 @@
-// src/redux/features/selectedRoundSlice.ts
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import { type RootState } from '../store'
 
@@ -24,5 +23,7 @@ const selectedRoundSlice = createSlice({
 })
 
 export const { setSelectedRoundId, clearSelectedRoundId } = selectedRoundSlice.actions
-export const selectSelectedRoundId = (state: RootState): string | null => state.selectedRound.id
+
+export const selectSelectedRoundId = (state: RootState) => state.selectedRound.id
+
 export default selectedRoundSlice.reducer

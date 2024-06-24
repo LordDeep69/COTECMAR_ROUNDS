@@ -543,9 +543,92 @@ export const fetchSystemDetails = async (id: number): Promise<Sistema> => {
 // api.ts
 
 // Función para obtener los detalles específicos de un equipo basado en su ID
-export const obtenerDetallesEquipo = async (idEquipo: string): Promise<any> => {
+
+export const obtenerRegistrosEquipo = async (idEquipo: string): Promise<any[]> => {
   try {
     const response = await fetch(`http://localhost:3002/api/equipos/${idEquipo}`)
+    if (!response.ok) {
+      throw new Error('Error al obtener registros del equipo')
+    }
+    return await response.json()
+  } catch (error) {
+    console.error('Error al obtener registros del equipo:', error)
+    throw new Error('Error al obtener registros del equipo')
+  }
+}
+
+export const crearRegistroEquipo = async (idEquipo: string, data: any): Promise<void> => {
+  try {
+    data.fecha = toMySQLDatetimeFormat(data.fecha)
+    const response = await fetch(`http://localhost:3002/api/equipos/${idEquipo}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+
+    if (!response.ok) {
+      throw new Error('Error al crear el registro del equipo')
+    }
+  } catch (error) {
+    console.error('Error al crear el registro del equipo:', error)
+    throw new Error('Error al crear el registro del equipo')
+  }
+}
+
+function toMySQLDatetimeFormat (isoString) {
+  const date = new Date(isoString)
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  const hours = String(date.getHours()).padStart(2, '0')
+  const minutes = String(date.getMinutes()).padStart(2, '0')
+  const seconds = String(date.getSeconds()).padStart(2, '0')
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+}
+
+export const actualizarRegistroEquipo = async (idEquipo: string, idRegistro: string, data: any): Promise<void> => {
+  try {
+    const response = await fetch(`http://localhost:3002/api/equipos/${idEquipo}/${idRegistro}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+
+    if (!response.ok) {
+      throw new Error('Error al actualizar el registro del equipo')
+    }
+  } catch (error) {
+    console.error('Error al actualizar el registro del equipo:', error)
+    throw new Error('Error al actualizar el registro del equipo')
+  }
+}
+
+export const eliminarRegistroEquipo = async (idEquipo: string, idRegistro: string): Promise<void> => {
+  try {
+    const response = await fetch(`http://localhost:3002/api/equipos/${idEquipo}/${idRegistro}`, {
+      method: 'DELETE'
+    })
+
+    if (!response.ok) {
+      throw new Error('Error al eliminar el registro del equipo')
+    }
+  } catch (error) {
+    console.error('Error al eliminar el registro del equipo:', error)
+    throw new Error('Error al eliminar el registro del equipo')
+  }
+}
+
+// Otras funciones de la API
+// ...
+
+// Función para obtener la estructura de datos de la tabla de un equipo
+export const obtenerDetallesEquipo = async (idEquipo: string): Promise<any> => {
+  try {
+    const response = await fetch(`http://localhost:3002/api/equipo-detalles/${idEquipo}`)
     if (!response.ok) {
       throw new Error('Error al obtener los detalles del equipo')
     }
@@ -556,6 +639,3 @@ export const obtenerDetallesEquipo = async (idEquipo: string): Promise<any> => {
     throw new Error('Error al obtener los detalles del equipo')
   }
 }
-
-// Otras funciones de la API
-// ...

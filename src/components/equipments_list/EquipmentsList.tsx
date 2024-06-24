@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { obtenerEquipos, type Equipo } from '../../../api'
 import './equipmentsList.scss'
+import { useSelector } from 'react-redux'
+import { type RootState } from '../../redux/store'
 
 interface EquipmentsListProps {
   selectedSystemId: number
@@ -11,6 +13,7 @@ const EquipmentsList: React.FC<EquipmentsListProps> = ({ selectedSystemId, handl
   const [equipos, setEquipos] = useState<Equipo[]>([])
   const [filteredEquipos, setFilteredEquipos] = useState<Equipo[]>([])
   const [searchTerm, setSearchTerm] = useState('')
+  const registeredEquipments = useSelector((state: RootState) => state.registeredEquipment.registeredEquipments)
 
   useEffect(() => {
     const fetchEquipos = async (): Promise<void> => {
@@ -42,10 +45,15 @@ const EquipmentsList: React.FC<EquipmentsListProps> = ({ selectedSystemId, handl
       </div>
       <div className="equipments-grid">
         {filteredEquipos.map((equipment) => (
-          <div className="equipment-card" key={equipment.id}>
+          <div className={`equipment-card ${registeredEquipments.includes(equipment.id) ? 'registered' : ''}`} key={equipment.id}>
             <img src={equipment.imagen_equipo} alt={equipment.nombre_equipo} />
             <h2>{equipment.nombre_equipo}</h2>
-            <button onClick={() => { handleRegister(equipment) }}>Registrar Ronda</button>
+            <button
+              onClick={() => { handleRegister(equipment) }}
+              disabled={registeredEquipments.includes(equipment.id)}
+            >
+              {registeredEquipments.includes(equipment.id) ? 'Registrado' : 'Registrar Ronda'}
+            </button>
           </div>
         ))}
       </div>

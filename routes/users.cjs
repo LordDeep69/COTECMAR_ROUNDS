@@ -177,12 +177,10 @@ router.post('/equipos', (req, res) => {
 
 
 router.post('/rondas', (req, res) => {
-    const { id_sistema, fecha } = req.body;
+    const { id, id_sistema, fecha, registedBy } = req.body;
 
-    // Modificar la consulta para que MySQL genere automáticamente un valor para el campo id
-    const query = 'INSERT INTO Rondas (id, id_sistema, fecha) VALUES (UUID(), ?, ?)';
-
-    db.query(query, [id_sistema, fecha], (error, result) => {
+    const query = 'INSERT INTO Rondas (id, id_sistema, fecha, registedBy) VALUES (?, ?, ?, ?)';
+    db.query(query, [id, id_sistema, fecha, registedBy], (error, result) => {
         if (error) {
             console.error('Error al crear una nueva ronda:', error);
             res.status(500).json({ error: 'Error al crear una nueva ronda' });
@@ -191,7 +189,6 @@ router.post('/rondas', (req, res) => {
         }
     });
 });
-
 
 router.put('/sistemas/:id', (req, res) => {
     const sistemaId = req.params.id;
@@ -468,12 +465,146 @@ router.get('/equipo-detalles/:id', (req, res) => {
     });
 });
 
+
+
+// Obtener todos los registros de un equipo específico
+router.get('/equipos/:id', (req, res) => {
+    const equipoId = req.params.id;
+    const query = `SELECT * FROM ${equipoId}`;
+
+    db.query(query, (error, results) => {
+        if (error) {
+            console.error(`Error al obtener registros de la tabla ${equipoId}:`, error);
+            res.status(500).json({ error: `Error al obtener registros de la tabla ${equipoId}` });
+        } else {
+            res.status(200).json(results);
+        }
+    });
+});
+
+
+// Endpoint para obtener detalles del equipo
+router.get('/equipos/:id', (req, res) => {
+    const idEquipo = req.params.id;
+
+    const query = `SHOW COLUMNS FROM \`${idEquipo}\``;
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error(`Error al obtener la estructura de la tabla del equipo ${idEquipo}:`, err);
+            res.status(500).json({ error: 'Error al obtener los detalles del equipo' });
+            return;
+        }
+        res.json(results);
+    });
+});
+
+// Crear un nuevo registro en un equipo específico
+
+// Crear un nuevo registro en un equipo específico
+router.post('/equipos/:id', (req, res) => {
+    const equipoId = req.params.id;
+    const newData = req.body;
+    newData.fecha = toMySQLDatetimeFormat(newData.fecha); // Convertir la fecha al formato MySQL
+    const query = `INSERT INTO ${equipoId} SET ?`;
+
+    db.query(query, newData, (error, result) => {
+        if (error) {
+            console.error(`Error al crear un nuevo registro en la tabla ${equipoId}:`, error);
+            res.status(500).json({ error: `Error al crear un nuevo registro en la tabla ${equipoId}` });
+        } else {
+            res.status(201).json({ message: `Registro creado exitosamente en ${equipoId}` });
+        }
+    });
+});
+
+function toMySQLDatetimeFormat(isoString) {
+    const date = new Date(isoString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
+// Manejar la reconexión de MySQL
+db.on('error', function (err) {
+    console.error('MySQL error:', err);
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+        handleDisconnect();
+    } else {
+        throw err;
+    }
+});
+
+function handleDisconnect() {
+    db = mysql.createConnection(db.config); // Recreate the connection, since
+    // the old one cannot be reused.
+
+    db.connect(function (err) {              // The server is either down
+        if (err) {                            // or restarting (takes a while sometimes).
+            console.error('Error when connecting to db:', err);
+            setTimeout(handleDisconnect, 2000); // We introduce a delay before attempting to reconnect,
+        }
+    });
+
+    db.on('error', function (err) {
+        console.error('MySQL error:', err);
+        if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+            handleDisconnect();
+        } else {
+            throw err;
+        }
+    });
+}
+// Actualizar un registro en un equipo específico
+router.put('/equipos/:id/:recordId', (req, res) => {
+    const equipoId = req.params.id;
+    const recordId = req.params.recordId;
+    const updatedData = req.body;
+    const query = `UPDATE ${equipoId} SET ? WHERE id = ?`;
+
+    db.query(query, [updatedData, recordId], (error, results) => {
+        if (error) {
+            console.error(`Error al actualizar el registro en la tabla ${equipoId}:`, error);
+            res.status(500).json({ error: `Error al actualizar el registro en la tabla ${equipoId}` });
+        } else {
+            if (results.affectedRows > 0) {
+                res.status(200).json({ message: `Registro actualizado exitosamente en ${equipoId}` });
+            } else {
+                res.status(404).json({ message: `Registro no encontrado en ${equipoId}` });
+            }
+        }
+    });
+});
+
+// Eliminar un registro en un equipo específico
+router.delete('/equipos/:id/:recordId', (req, res) => {
+    const equipoId = req.params.id;
+    const recordId = req.params.recordId;
+    const query = `DELETE FROM ${equipoId} WHERE id = ?`;
+
+    db.query(query, [recordId], (error, results) => {
+        if (error) {
+            console.error(`Error al eliminar el registro en la tabla ${equipoId}:`, error);
+            res.status(500).json({ error: `Error al eliminar el registro en la tabla ${equipoId}` });
+        } else {
+            if (results.affectedRows > 0) {
+                res.status(200).json({ message: `Registro eliminado exitosamente en ${equipoId}` });
+            } else {
+                res.status(404).json({ message: `Registro no encontrado en ${equipoId}` });
+            }
+        }
+    });
+});
+
 module.exports = router;
 
 
 
 
-module.exports = router;
 
 
 

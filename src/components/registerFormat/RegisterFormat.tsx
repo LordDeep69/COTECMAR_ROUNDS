@@ -3,17 +3,20 @@ import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import { TextField, Button, Container, Typography, Box, Grid } from '@mui/material'
-import { v4 as uuidv4 } from 'uuid'
-import { type Equipo } from '../../../api'
+import { type Equipo, crearRegistroEquipo } from '../../../api'
 import './registerFormat.scss'
+import { useDispatch } from 'react-redux'
+import { addRegisteredEquipment } from '../../redux/features/registeredEquipmentSlice'
 
 interface RegisterFormProps {
   equipment: Equipo
   handleBack: () => void
+  roundId: string
 }
 
-const RegisterForm: React.FC<RegisterFormProps> = ({ equipment, handleBack }) => {
+const RegisterForm: React.FC<RegisterFormProps> = ({ equipment, handleBack, roundId }) => {
   const [fields, setFields] = useState<any[]>([])
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const fetchEquipmentDetails = async (): Promise<void> => {
@@ -52,16 +55,21 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ equipment, handleBack }) =>
     resolver: yupResolver(formSchema)
   })
 
-  const onSubmit = (data: any) => {
-    // Agregar valores automáticos
+  const onSubmit = async (data: any) => {
     const formData = {
-      id_ronda: uuidv4(),
+      id_ronda: roundId,
       fecha: new Date().toISOString(),
       ...data
     }
 
-    console.log('Datos del formulario:', formData)
-    // Aquí puedes hacer el POST a la API para enviar los datos del formulario
+    try {
+      await crearRegistroEquipo(equipment.id_equipo, formData)
+      dispatch(addRegisteredEquipment(equipment.id))
+      handleBack()
+      console.log('Registro exitoso:', formData)
+    } catch (error) {
+      console.error('Error al registrar el equipo:', error)
+    }
   }
 
   return (
