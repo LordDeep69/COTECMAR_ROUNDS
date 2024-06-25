@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { obtenerEquipos, type Equipo } from '../../../api'
-import './equipmentsList.scss'
 import { useSelector } from 'react-redux'
 import { type RootState } from '../../redux/store'
+import { TextField, Card, CardContent, CardMedia, Button, Grid, Typography, Box } from '@mui/material'
+import './equipmentsList.scss'
 
 interface EquipmentsListProps {
   selectedSystemId: number
@@ -34,30 +35,46 @@ const EquipmentsList: React.FC<EquipmentsListProps> = ({ selectedSystemId, handl
   }, [searchTerm, equipos])
 
   return (
-    <div className="equipments-list-container">
-      <div className="search-container">
-        <input
+    <Box className="equipments-list-container">
+      <Box className="search-container">
+        <TextField
           type="text"
           placeholder="Buscar equipos..."
           value={searchTerm}
           onChange={(e) => { setSearchTerm(e.target.value) }}
+          fullWidth
+          variant="outlined"
+          size="small"
         />
-      </div>
-      <div className="equipments-grid">
+      </Box>
+      <Grid container spacing={3} className="equipments-grid">
         {filteredEquipos.map((equipment) => (
-          <div className={`equipment-card ${registeredEquipments.includes(equipment.id) ? 'registered' : ''}`} key={equipment.id}>
-            <img src={equipment.imagen_equipo} alt={equipment.nombre_equipo} />
-            <h2>{equipment.nombre_equipo}</h2>
-            <button
-              onClick={() => { handleRegister(equipment) }}
-              disabled={registeredEquipments.includes(equipment.id)}
-            >
-              {registeredEquipments.includes(equipment.id) ? 'Registrado' : 'Registrar Ronda'}
-            </button>
-          </div>
+          <Grid item xs={12} sm={6} md={4} lg={3} key={equipment.id}>
+            <Card className={`equipment-card ${registeredEquipments.includes(equipment.id) ? 'registered' : ''}`}>
+              <CardMedia
+                component="img"
+                height="140"
+                image={equipment.imagen_equipo}
+                alt={equipment.nombre_equipo}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {equipment.nombre_equipo}
+                </Typography>
+                <Button
+                  variant="contained"
+                  color={registeredEquipments.includes(equipment.id) ? 'secondary' : 'primary'}
+                  onClick={() => { handleRegister(equipment) }}
+                  disabled={registeredEquipments.includes(equipment.id)}
+                >
+                  {registeredEquipments.includes(equipment.id) ? 'Registrado' : 'Registrar Ronda'}
+                </Button>
+              </CardContent>
+            </Card>
+          </Grid>
         ))}
-      </div>
-    </div>
+      </Grid>
+    </Box>
   )
 }
 

@@ -639,3 +639,19 @@ export const obtenerDetallesEquipo = async (idEquipo: string): Promise<any> => {
     throw new Error('Error al obtener los detalles del equipo')
   }
 }
+
+// src/api.ts
+
+// Función para obtener el registro específico de un equipo basado en su ID y el ID de la ronda
+export const obtenerRegistroEquipo = async (idEquipo: string, idRonda: string): Promise<any> => {
+  try {
+    const response = await fetch(`http://localhost:3002/api/equipos/${idEquipo}/registro/${idRonda}`)
+    if (!response.ok) {
+      throw new Error('Error al obtener el registro del equipo')
+    }
+    return await response.json()
+  } catch (error) {
+    console.error('Error al obtener el registro del equipo:', error)
+    throw new Error('Error al obtener el registro del equipo')
+  }
+}

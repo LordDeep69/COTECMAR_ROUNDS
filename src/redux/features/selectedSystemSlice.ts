@@ -1,4 +1,4 @@
-// src/redux/features/selectedSystem/selectedSystemSlice.ts
+// src/redux/features/selectedSystemSlice.ts
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import { type Sistema } from '../../../api'
 import { type RootState } from '../store'
@@ -17,11 +17,14 @@ const selectedSystemSlice = createSlice({
   reducers: {
     setSelectedSystem: (state, action: PayloadAction<Sistema>) => {
       state.system = action.payload
+    },
+    clearSelectedSystem: (state) => {
+      state.system = null
     }
   }
 })
 
-export const { setSelectedSystem } = selectedSystemSlice.actions
+export const { setSelectedSystem, clearSelectedSystem } = selectedSystemSlice.actions
 export const selectSelectedSystem = (state: RootState): SelectedSystemState => state.selectedSystem
 
 export default selectedSystemSlice.reducer

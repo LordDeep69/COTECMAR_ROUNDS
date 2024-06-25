@@ -116,3 +116,52 @@
 .round-footer button:hover {
   background-color: #218838;
 }
+
+
+.round-container {
+  padding: 20px;
+  background-color: #f0f0f0;
+}
+
+.round-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(131, 24, 202, 0.425);
+}
+
+.round-header-title {
+  font-size: 36px;
+  font-weight: bold;
+  color: #c8ff00d2;
+}
+
+.registedBy-label {
+  color: #fff;
+  margin-right: 8px;
+}
+
+.registedBy-input {
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.timer {
+  font-size: 28px;
+  color: #ff0000;
+}
+
+.round-main {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.round-footer {
+  margin-top: 20px;
+  text-align: center;
+}

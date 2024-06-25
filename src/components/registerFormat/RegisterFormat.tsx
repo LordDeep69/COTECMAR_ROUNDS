@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
-import { TextField, Button, Container, Typography, Box, Grid } from '@mui/material'
+import { TextField, Button, Container, Typography, Box, Grid, Paper } from '@mui/material'
 import { type Equipo, crearRegistroEquipo } from '../../../api'
-import './registerFormat.scss'
 import { useDispatch } from 'react-redux'
 import { addRegisteredEquipment } from '../../redux/features/registeredEquipmentSlice'
+import './registerFormat.scss'
 
 interface RegisterFormProps {
   equipment: Equipo
@@ -24,7 +24,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ equipment, handleBack, roun
         const response = await fetch(`http://localhost:3002/api/equipo-detalles/${equipment.id_equipo}`)
         const data = await response.json()
         const filteredData = data.filter((field: any) => field.Field !== 'id' && field.Field !== 'id_ronda' && field.Field !== 'fecha')
-        console.log('Estructura de la tabla del equipo:', filteredData)
         setFields(filteredData)
       } catch (error) {
         console.error('Error al obtener los detalles del equipo:', error)
@@ -66,7 +65,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ equipment, handleBack, roun
       await crearRegistroEquipo(equipment.id_equipo, formData)
       dispatch(addRegisteredEquipment(equipment.id))
       handleBack()
-      console.log('Registro exitoso:', formData)
     } catch (error) {
       console.error('Error al registrar el equipo:', error)
     }
@@ -74,8 +72,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ equipment, handleBack, roun
 
   return (
     <Container maxWidth="md">
-      <Box my={4}>
-        <Button variant="contained" color="primary" onClick={handleBack}>← Volver</Button>
+      <Paper elevation={3} className="register-form-container">
+        <Button variant="contained" color="primary" onClick={handleBack} className="back-button">← Volver</Button>
         <Typography variant="h4" component="h1" gutterBottom>
           Formulario de Registro - {equipment.nombre_equipo}
         </Typography>
@@ -95,17 +93,18 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ equipment, handleBack, roun
                       type={field.Type === 'int' ? 'number' : 'text'}
                       error={!!errors[field.name]}
                       helperText={errors[field.name]?.message}
+                      className="form-field"
                     />
                   )}
                 />
               </Grid>
             ))}
           </Grid>
-          <Box mt={4}>
+          <Box mt={4} className="submit-button">
             <Button type="submit" variant="contained" color="primary" fullWidth>Enviar Registro</Button>
           </Box>
         </form>
-      </Box>
+      </Paper>
     </Container>
   )
 }

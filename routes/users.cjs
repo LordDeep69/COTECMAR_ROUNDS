@@ -600,6 +600,23 @@ router.delete('/equipos/:id/:recordId', (req, res) => {
     });
 });
 
+
+// Obtener un registro específico de un equipo basado en su ID y el ID de la ronda
+router.get('/equipos/:id_equipo/registro/:id_ronda', (req, res) => {
+    const { id_equipo, id_ronda } = req.params;
+    const query = `SELECT * FROM ${id_equipo} WHERE id_ronda = ?`;
+
+    db.query(query, [id_ronda], (error, results) => {
+        if (error) {
+            console.error(`Error al obtener el registro del equipo ${id_equipo} para la ronda ${id_ronda}:`, error);
+            res.status(500).json({ error: 'Error al obtener el registro del equipo' });
+        } else {
+            res.status(200).json(results[0]); // Suponemos que solo hay un registro por ronda
+        }
+    });
+});
+
+
 module.exports = router;
 
 
